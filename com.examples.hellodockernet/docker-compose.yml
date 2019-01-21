@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  app:
+    image: java-mongo-hello-java
+    networks:
+      - my-network
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:4.4.3
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
