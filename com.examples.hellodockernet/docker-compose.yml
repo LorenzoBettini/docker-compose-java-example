@@ -1,0 +1,30 @@
+version: "2.1"
+
+services:
+  app:
+    image: java-mongo-hello-world
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - my-network
+
+  db:
+    image: mongo:5
+    networks:
+      my-network:
+        aliases:
+          - mongodb
+    healthcheck:
+      test:
+        ["CMD", "mongo", "--quiet",
+        "--host", "127.0.0.1", "--port", "27017", "admin",
+        "--eval", "quit(db.runCommand({ ping: 1 }).ok ? 0 : 1)"]
+      interval: 1s
+      timeout: 10s
+      retries: 30
+      start_period: 0s
+
+networks:
+  my-network:
+    driver: bridge
