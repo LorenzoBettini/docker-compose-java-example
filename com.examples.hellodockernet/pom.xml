@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <mongo.driver.version>3.9.1</mongo.driver.version>
+    <mongo.driver.version>3.12.7</mongo.driver.version>
   </properties>
 
   <dependencies>
@@ -55,4 +55,77 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.34.1</version>
+            <configuration>
+              <!-- Docker custom networks mentioned in the run image configurations 
+                will be created automatically during "start" and removed during "stop". -->
+              <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+              <images>
+                <image>
+                  <name>java-mongo-hello-java</name>
+                  <build>
+                    <contextDir>${project.basedir}</contextDir>
+                  </build>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>my-network</name>
+                    </network>
+                    <wait>
+                      <log>Hello World!</log>
+                      <time>10000</time>
+                    </wait>
+                    <dependsOn>
+                      <container>mongo</container>
+                    </dependsOn>
+                  </run>
+                </image>
+                <image>
+                  <name>mongo:4.4.3</name>
+                  <alias>mongo</alias>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>my-network</name>
+                      <alias>mongodb</alias>
+                    </network>
+                    <wait>
+                      <log>Waiting for connections</log>
+                      <time>10000</time>
+                    </wait>
+                  </run>
+                </image>
+              </images>
+            </configuration>
+            <executions>
+              <execution>
+                <id>docker-build-image</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>docker-verify</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>start</goal>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
