@@ -55,4 +55,78 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.28.0</version>
+            <configuration>
+              <!-- Docker custom networks mentioned in the run image configurations 
+                will be created automatically start and removed during stop. -->
+              <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+              <images>
+                <image>
+                  <name>java-mongo-hello-java</name>
+                  <build>
+                    <dockerFileDir>${project.basedir}</dockerFileDir>
+                  </build>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>my-network</name>
+                    </network>
+                    <wait>
+                      <log>Hello World!</log>
+                      <exit>0</exit>
+                      <time>10000</time>
+                    </wait>
+                    <dependsOn>
+                      <container>mongo</container>
+                    </dependsOn>
+                  </run>
+                </image>
+                <image>
+                  <name>mongo:4.0.5</name>
+                  <alias>mongo</alias>
+                  <run>
+                    <network>
+                      <mode>custom</mode>
+                      <name>my-network</name>
+                      <alias>mongodb</alias>
+                    </network>
+                    <wait>
+                      <log>waiting for connections on port 27017</log>
+                      <time>10000</time>
+                    </wait>
+                  </run>
+                </image>
+              </images>
+            </configuration>
+            <executions>
+              <execution>
+                <id>docker:build</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>docker:start</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>start</goal>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
