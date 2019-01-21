@@ -105,6 +105,19 @@
                     </wait>
                   </run>
                 </image>
+                <image>
+                  <alias>app</alias>
+                  <external>
+                    <type>compose</type>
+                    <basedir>${project.basedir}</basedir>
+                  </external>
+                  <run>
+                    <wait>
+                      <log>Hello World!</log>
+                      <time>10000</time>
+                    </wait>
+                  </run>
+                </image>
               </images>
             </configuration>
             <executions>
