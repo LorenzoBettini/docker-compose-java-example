@@ -1,0 +1,2 @@
+# Used by io.fabric8:docker-maven-plugin
+target/*-with-dependencies.jar
