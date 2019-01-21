@@ -1,0 +1,17 @@
+If run from the command line...
+
+Build the Docker image
+
+docker build -t java-mongo-hello-world . 
+
+Create a Docker network
+
+docker network create mynetwork
+
+Start the MongoDB container on this network with the name "mongodb"
+
+docker run --net=mynetwork --rm --name=mongodb mongo:5
+
+Start the built Docker image of this application on this network
+
+docker run -it --rm --net=mynetwork java-mongo-hello-world
