@@ -72,6 +72,7 @@
               <images>
                 <image>
                   <name>java-mongo-hello-java</name>
+                  <alias>java-app</alias>
                   <build>
                     <contextDir>${project.basedir}</contextDir>
                   </build>
@@ -98,30 +99,6 @@
                       <name>my-network</name>
                       <alias>mongodb</alias>
                     </network>
-                    <ports>
-                      <port>mongo.port:27017</port>
-                    </ports>
-                    <wait>
-                      <http>
-                        <url>http://localhost:${mongo.port}</url>
-                        <method>GET</method>
-                        <status>200</status>
-                      </http>
-                      <time>10000</time>
-                    </wait>
-                  </run>
-                </image>
-                <image>
-                  <alias>app</alias>
-                  <external>
-                    <type>compose</type>
-                    <basedir>${project.basedir}</basedir>
-                  </external>
-                  <run>
-                    <wait>
-                      <log>Hello World!</log>
-                      <time>10000</time>
-                    </wait>
                   </run>
                 </image>
               </images>
