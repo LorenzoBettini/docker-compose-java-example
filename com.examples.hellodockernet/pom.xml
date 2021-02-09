@@ -98,12 +98,15 @@
                       <name>my-network</name>
                       <alias>mongodb</alias>
                     </network>
+                    <ports>
+                      <port>mongo.port:27017</port>
+                    </ports>
                     <wait>
-                      <tcp>
-                        <ports>
-                          <port>27017</port>
-                        </ports>
-                      </tcp>
+                      <http>
+                        <url>http://localhost:${mongo.port}</url>
+                        <method>GET</method>
+                        <status>200</status>
+                      </http>
                       <time>10000</time>
                     </wait>
                   </run>
