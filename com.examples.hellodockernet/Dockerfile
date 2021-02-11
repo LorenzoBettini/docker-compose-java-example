@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8-jre
 
 COPY /target/*-jar-with-dependencies.jar /app/app.jar
 
