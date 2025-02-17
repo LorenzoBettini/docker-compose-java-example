@@ -31,6 +31,9 @@ jobs:
     - name: Build with Maven
       run: mvn package
       working-directory: com.examples.hellodockernet
+    - name: Test with Docker
+      run: mvn verify -Pdocker
+      working-directory: com.examples.hellodockernet
     - name: Test with Docker Compose
       run: mvn verify -Pdocker-compose
       working-directory: com.examples.hellodockernet
