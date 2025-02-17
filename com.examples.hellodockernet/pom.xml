@@ -90,7 +90,7 @@
                   </run>
                 </image>
                 <image>
-                  <name>mongo:4.4.3</name>
+                  <name>mongo:5</name>
                   <alias>mongo</alias>
                   <run>
                     <network>
