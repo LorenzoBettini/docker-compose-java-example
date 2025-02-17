@@ -34,6 +34,8 @@ jobs:
     - name: Test with Docker
       run: mvn verify -Pdocker
       working-directory: com.examples.hellodockernet
-    - name: Test with Docker Compose
-      run: mvn verify -Pdocker-compose
-      working-directory: com.examples.hellodockernet
+# In Windows running both leads to
+# Cannot create docker access object : \\.\pipe\docker_engine (All pipe instances are busy)
+#    - name: Test with Docker Compose
+#      run: mvn verify -Pdocker-compose
+#      working-directory: com.examples.hellodockernet
