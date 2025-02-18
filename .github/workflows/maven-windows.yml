@@ -1,18 +1,20 @@
 # This workflow will build a Java project with Maven and Docker
 
-name: Java CI with Maven and Docker in Linux
+name: Java CI with Maven and Docker in Windows
 
 on:
   push:
+    branches:
+      - master
   pull_request:
   schedule:
     - cron: "0 7 * * 0"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
-    name: Build in Linux
+    name: Build in Windows
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 8
@@ -32,6 +34,8 @@ jobs:
     - name: Test with Docker
       run: mvn verify -Pdocker
       working-directory: com.examples.hellodockernet
-    - name: Test with Docker Compose
-      run: mvn verify -Pdocker-compose
-      working-directory: com.examples.hellodockernet
+# In Windows running both leads to
+# Cannot create docker access object : \\.\pipe\docker_engine (All pipe instances are busy)
+#    - name: Test with Docker Compose
+#      run: mvn verify -Pdocker-compose
+#      working-directory: com.examples.hellodockernet
