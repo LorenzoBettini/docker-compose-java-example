@@ -10,7 +10,7 @@ docker network create mynetwork
 
 Start the MongoDB container on this network with the name "mongodb"
 
-docker run --net=mynetwork --rm --name=mongodb mongo:4.4.3
+docker run --net=mynetwork --rm --name=mongodb mongo:5
 
 Start the built Docker image of this application on this network
 
