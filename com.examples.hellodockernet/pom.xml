@@ -136,12 +136,12 @@
 											<port>mongo.port:27017</port>
 										</ports>
 										<wait>
-											<http>
-												<url>
-													http://localhost:${mongo.port}</url>
-												<method>GET</method>
-												<status>200</status>
-											</http>
+											<tcp>
+												<ports>
+													<port>27017</port>
+												</ports>
+												<mode>mapped</mode>
+											</tcp>
 											<time>10000</time>
 										</wait>
 									</run>
