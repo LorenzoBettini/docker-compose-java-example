@@ -16,7 +16,7 @@ services:
         aliases:
           - mongodb
     healthcheck:
-      test: ["CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongosh --quiet mongodb://mongodb:27017/admin | grep 1"]
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/27017'"]
       interval: 1s
       timeout: 3s
       retries: 30
