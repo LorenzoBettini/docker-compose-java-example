@@ -1,16 +1,25 @@
-version: '2'
+version: "2.1"
 
 services:
   app:
     image: java-mongo-hello-java
+    depends_on:
+      mongodb:
+        condition: service_healthy
     networks:
       - my-network
-    depends_on:
-      - mongodb
+
   mongodb:
     image: mongo:5
     networks:
-      - my-network
+      my-network:
+        aliases:
+          - mongodb
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongosh --quiet mongodb://mongodb:27017/admin | grep 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
 networks:
   my-network:
