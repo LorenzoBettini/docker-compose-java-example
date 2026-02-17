@@ -160,6 +160,7 @@
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
 						<configuration>
+							<showLogs>true</showLogs>
 							<!-- useful when docker-compose config defines the
 							healthchecks, but the default wait timeout of
 							10000ms is too short for some containers to become
