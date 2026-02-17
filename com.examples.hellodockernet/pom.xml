@@ -170,7 +170,7 @@
 									<run>
 										<wait>
 											<log>Hello World!</log>
-											<time>10000</time>
+											<time>60000</time>
 										</wait>
 									</run>
 								</image>
