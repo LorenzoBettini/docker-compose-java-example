@@ -17,9 +17,10 @@ services:
           - mongodb
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.runCommand(\"ping\").ok' | mongosh --quiet mongodb://mongodb:27017/admin | grep 1"]
-      interval: 5s
+      interval: 1s
       timeout: 3s
-      retries: 20
+      retries: 30
+      start_period: 0s
 
 networks:
   my-network:
