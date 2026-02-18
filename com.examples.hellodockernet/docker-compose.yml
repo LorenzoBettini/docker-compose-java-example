@@ -4,12 +4,12 @@ services:
   app:
     image: java-mongo-hello-world
     depends_on:
-      mongodb:
+      db:
         condition: service_healthy
     networks:
       - my-network
 
-  mongodb:
+  db:
     image: mongo:5
     networks:
       my-network:
