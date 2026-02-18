@@ -68,7 +68,7 @@
 						<autoCreateCustomNetworks>true</autoCreateCustomNetworks>
 						<images>
 							<image>
-								<name>java-mongo-hello-java</name>
+								<name>java-mongo-hello-world</name>
 								<build>
 									<contextDir>${project.basedir}</contextDir>
 								</build>
@@ -108,7 +108,7 @@
 						<configuration>
 							<images>
 								<image>
-									<name>java-mongo-hello-java</name>
+									<name>java-mongo-hello-world</name>
 									<run>
 										<network>
 											<mode>custom</mode>

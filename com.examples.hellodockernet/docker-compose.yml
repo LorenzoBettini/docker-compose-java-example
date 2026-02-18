@@ -2,7 +2,7 @@ version: "2.1"
 
 services:
   app:
-    image: java-mongo-hello-java
+    image: java-mongo-hello-world
     depends_on:
       mongodb:
         condition: service_healthy
