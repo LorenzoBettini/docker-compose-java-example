@@ -119,13 +119,13 @@
 											<time>30000</time>
 										</wait>
 										<dependsOn>
-											<container>mongo</container>
+											<container>db</container>
 										</dependsOn>
 									</run>
 								</image>
 								<image>
 									<name>mongo:5</name>
-									<alias>mongo</alias>
+									<alias>db</alias>
 									<run>
 										<network>
 											<mode>custom</mode>
