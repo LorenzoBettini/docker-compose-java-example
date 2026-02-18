@@ -132,11 +132,15 @@
 											<name>my-network</name>
 											<alias>mongodb</alias>
 										</network>
+										<ports>
+											<port>mongo.port:27017</port>
+										</ports>
 										<wait>
 											<tcp>
 												<ports>
 													<port>27017</port>
 												</ports>
+												<mode>mapped</mode>
 											</tcp>
 											<time>30000</time>
 										</wait>
