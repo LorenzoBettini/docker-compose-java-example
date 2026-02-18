@@ -16,9 +16,12 @@ services:
         aliases:
           - mongodb
     healthcheck:
-      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/27017'"]
+      test:
+        ["CMD", "mongo", "--quiet",
+        "--host", "127.0.0.1", "--port", "27017", "admin",
+        "--eval", "quit(db.runCommand({ ping: 1 }).ok ? 0 : 1)"]
       interval: 1s
-      timeout: 3s
+      timeout: 10s
       retries: 30
       start_period: 0s
 

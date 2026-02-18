@@ -116,7 +116,7 @@
 										</network>
 										<wait>
 											<log>Hello World!</log>
-											<time>10000</time>
+											<time>30000</time>
 										</wait>
 										<dependsOn>
 											<container>mongo</container>
@@ -142,7 +142,7 @@
 												</ports>
 												<mode>mapped</mode>
 											</tcp>
-											<time>10000</time>
+											<time>30000</time>
 										</wait>
 									</run>
 								</image>
@@ -160,6 +160,11 @@
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
 						<configuration>
+							<!-- useful when docker-compose config defines the
+							healthchecks, but the default wait timeout of
+							10000ms is too short for some containers to become
+							healthy. -->
+							<startContainerWaitTimeout>60000</startContainerWaitTimeout>
 							<images>
 								<image>
 									<alias>app</alias>
@@ -170,7 +175,7 @@
 									<run>
 										<wait>
 											<log>Hello World!</log>
-											<time>10000</time>
+											<time>30000</time>
 										</wait>
 									</run>
 								</image>
