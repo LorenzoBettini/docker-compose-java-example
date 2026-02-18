@@ -17,12 +17,9 @@ services:
           - mongodb
     healthcheck:
       test:
-        - CMD
-        - mongosh
-        - --quiet
-        - mongodb://localhost:27017/admin
-        - --eval
-        - "quit(db.runCommand({ ping: 1 }).ok ? 0 : 1)"
+        ["CMD", "mongo", "--quiet",
+        "--host", "127.0.0.1", "--port", "27017", "admin",
+        "--eval", "quit(db.runCommand({ ping: 1 }).ok ? 0 : 1)"]
       interval: 1s
       timeout: 10s
       retries: 30
