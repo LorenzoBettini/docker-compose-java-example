@@ -55,5 +55,102 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.48.1</version>
+					<configuration>
+						<!-- Docker custom networks mentioned in the run
+							image configurations will be created automatically during "start" and removed
+							during "stop". -->
+						<autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+						<images>
+							<image>
+								<name>java-mongo-hello-world</name>
+								<build>
+									<contextDir>${project.basedir}</contextDir>
+								</build>
+							</image>
+						</images>
+					</configuration>
+					<executions>
+						<execution>
+							<id>docker-build-image</id>
+							<phase>package</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>docker-verify</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>start</goal>
+								<goal>stop</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<configuration>
+							<images>
+								<image>
+									<name>java-mongo-hello-world</name>
+									<run>
+										<network>
+											<mode>custom</mode>
+											<name>my-network</name>
+										</network>
+										<wait>
+											<log>Hello World!</log>
+											<time>30000</time>
+										</wait>
+										<dependsOn>
+											<container>db</container>
+										</dependsOn>
+									</run>
+								</image>
+								<image>
+									<name>mongo:5</name>
+									<alias>db</alias>
+									<run>
+										<network>
+											<mode>custom</mode>
+											<name>my-network</name>
+											<alias>mongodb</alias>
+										</network>
+										<ports>
+											<port>mongo.port:27017</port>
+										</ports>
+										<wait>
+											<tcp>
+												<ports>
+													<port>27017</port>
+												</ports>
+												<mode>mapped</mode>
+											</tcp>
+											<time>30000</time>
+										</wait>
+									</run>
+								</image>
+							</images>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
